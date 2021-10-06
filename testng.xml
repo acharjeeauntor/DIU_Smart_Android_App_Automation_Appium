@@ -6,7 +6,8 @@
     </listeners>
     <test name="DIUSmartApp">
         <classes>
-            <class name="org.auntor.testCases.HomePageTest"/>
+<!--            <class name="org.auntor.testCases.HomePageTest"/>-->
+            <class name="org.auntor.testCases.NavigationDrawerTest"/>
         </classes>
     </test>
 </suite>
