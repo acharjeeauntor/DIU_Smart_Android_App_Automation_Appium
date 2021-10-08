@@ -6,20 +6,20 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
 
-public class StudentPortalPage {
-
+public class ExaminationGuideline {
     AndroidDriver driver;
 
-    public StudentPortalPage(AndroidDriver driver){
+
+    public ExaminationGuideline(AndroidDriver driver) {
         this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(driver),this);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
-    @AndroidFindBy(xpath = "//android.view.View[@index='4']")
-    AndroidElement portalPageText;
+    @AndroidFindBy(xpath = "//android.widget.ImageButton[@index='2']")
+    AndroidElement okButtonElement;
 
-    public String portalPageTest() {
-        return portalPageText.getText();
+
+    public void PressOkButton(){
+        okButtonElement.click();
     }
-
 }

@@ -6,20 +6,19 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
 
-public class StudentPortalPage {
-
+public class Administration {
     AndroidDriver driver;
 
-    public StudentPortalPage(AndroidDriver driver){
+    public Administration(AndroidDriver driver){
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver),this);
     }
 
-    @AndroidFindBy(xpath = "//android.view.View[@index='4']")
-    AndroidElement portalPageText;
+    @AndroidFindBy(id = "com.daffodilvarsity.diu:id/searchText")
+    AndroidElement searchTextElement;
 
-    public String portalPageTest() {
-        return portalPageText.getText();
+    public String  getSearchHintTextForAdministration(){
+        return searchTextElement.getText();
     }
 
 }

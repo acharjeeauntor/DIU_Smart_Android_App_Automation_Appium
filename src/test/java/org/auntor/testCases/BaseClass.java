@@ -73,7 +73,6 @@ public class BaseClass {
             startEmulator();
         }
         dc.setCapability(MobileCapabilityType.DEVICE_NAME, deviceType);
-
         dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
         dc.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 14);
         dc.setCapability("appium:chromeOptions", ImmutableMap.of("w3c", false));

@@ -82,7 +82,7 @@ public class HomePageTest extends BaseClass {
         homePage = new HomePage(driver);
         studentPortalPage = new StudentPortalPage(driver);
         homePage.clickStudentPortalBtn();
-        if (studentPortalPage.portalPageHeadingTest().equals("Requested Resource Not Found!")) {
+        if (studentPortalPage.portalPageTest().equals("Requested Resource Not Found!")) {
             driver.navigate().back();
             logger.info("Test Passed");
             Assert.assertTrue(true);
