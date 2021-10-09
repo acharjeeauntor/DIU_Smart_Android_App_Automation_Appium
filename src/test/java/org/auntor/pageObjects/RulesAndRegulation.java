@@ -21,7 +21,6 @@ public class RulesAndRegulation extends BaseClass {
 
 
     public void PressOkButton(){
-        scrolling(.20, .20, .80, .20);
         okButtonElement.click();
     }
 }

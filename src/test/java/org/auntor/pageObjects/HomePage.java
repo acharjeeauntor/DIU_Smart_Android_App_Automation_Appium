@@ -50,8 +50,9 @@ public class HomePage {
         return currentDayElement.getText().toLowerCase();
     }
 
-    public void pressNavigationDrawer(){
+    public void pressNavigationDrawer() throws InterruptedException {
         navigationDrawerBtnElement.click();
+        Thread.sleep(2000);
     }
 
     public void clickStudentPortalBtn(){

@@ -7,7 +7,8 @@
     <test name="DIUSmartApp">
         <classes>
 <!--            <class name="org.auntor.testCases.HomePageTest"/>-->
-            <class name="org.auntor.testCases.NavigationDrawerTest"/>
+<!--            <class name="org.auntor.testCases.NavigationDrawerTest"/>-->
+            <class name="org.auntor.testCases.SettingsTest"/>
         </classes>
     </test>
 </suite>

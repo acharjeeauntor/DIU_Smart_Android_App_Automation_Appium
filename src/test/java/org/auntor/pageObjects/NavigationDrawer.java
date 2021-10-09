@@ -29,14 +29,12 @@ public class NavigationDrawer extends BaseClass {
     FacultyMember facultyMember;
     AcademicResult academicResult;
     AcademicCalender academicCalender;
-    TouchAction action;
     RulesAndRegulation rulesAndRegulation;
     HomePage homePage;
     ExaminationGuideline examinationGuideline;
     ProspectiveStudents prospectiveStudents;
     CreditTransfer creditTransfer;
     Settings settings;
-    About about;
 
     public NavigationDrawer(AndroidDriver driver) {
         this.driver = driver;
@@ -69,9 +67,6 @@ public class NavigationDrawer extends BaseClass {
     AndroidElement nav_CreditTransferElement;
     @AndroidFindBy(xpath = "//*[@resource-id='com.daffodilvarsity.diu:id/material_drawer_name' and contains(@text,'Settings')]")
     AndroidElement nav_SettingsElement;
-    @AndroidFindBy(xpath = "//*[@resource-id='com.daffodilvarsity.diu:id/material_drawer_name' and contains(@text,'About')]")
-    AndroidElement nav_AboutElement;
-
     public String getNavigationDrawerHeaderText() {
         return navigationDrawerHeaderElement.getText();
     }
@@ -97,7 +92,7 @@ public class NavigationDrawer extends BaseClass {
 
     public String getClassRoutinePageHeader() {
         classRoutine = new ClassRoutine(driver);
-        action = new TouchAction(driver);
+       TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_ClassRoutineElement))).perform();
         closeAppSplashScreen();
         return classRoutine.getHeaderText();
@@ -105,42 +100,42 @@ public class NavigationDrawer extends BaseClass {
 
     public String getNoticeBoardPageHeader() {
         noticeBoard = new NoticeBoard(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_NoticeBoardElement))).perform();
         return noticeBoard.getHeaderText();
     }
 
     public String getStudentPortalPageHeader() {
         studentPortalPage = new StudentPortalPage(driver);
-        action = new TouchAction(driver);
+        TouchAction  action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_StudentPortalElement))).perform();
         return studentPortalPage.portalPageTest();
     }
 
     public String getAdministrationSearchHintText() {
         administration = new Administration(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_AdministrationElement))).perform();
         return administration.getSearchHintTextForAdministration();
     }
 
     public String getFacultyMemberSearchHintText() {
         facultyMember = new FacultyMember(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_FacultyMembersElement))).perform();
         return facultyMember.getSearchHintText();
     }
 
     public String getAcademicResultPageHeaderText() {
         academicResult = new AcademicResult(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_AcademicResultElement))).perform();
         return academicResult.getHeaderText();
     }
 
     public int getAcademicCalenderYearText() {
         academicCalender = new AcademicCalender(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_AcademicCalendarElement))).perform();
         return academicCalender.getCurrentYear();
     }
@@ -148,7 +143,8 @@ public class NavigationDrawer extends BaseClass {
     public boolean rulesAndRegulationPageOkBtnCheck() {
         rulesAndRegulation = new RulesAndRegulation(driver);
         homePage = new HomePage(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
+
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_RulesAndRegulationElement))).perform();
         rulesAndRegulation.PressOkButton();
         if(homePage.getPageTitle().equals("diu")){
@@ -160,7 +156,7 @@ public class NavigationDrawer extends BaseClass {
     public boolean examinationGuidelinePageOkBtnCheck() {
        examinationGuideline = new ExaminationGuideline(driver);
         homePage = new HomePage(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_ExaminationGuidelineElement))).perform();
         examinationGuideline.PressOkButton();
         if(homePage.getPageTitle().equals("diu")){
@@ -172,7 +168,7 @@ public class NavigationDrawer extends BaseClass {
     public boolean prospectiveStudentsPageOkBtnCheck() {
         prospectiveStudents = new ProspectiveStudents(driver);
         homePage = new HomePage(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_ProspectiveStudentsElement))).perform();
         prospectiveStudents.PressOkButton();
         if(homePage.getPageTitle().equals("diu")){
@@ -185,7 +181,7 @@ public class NavigationDrawer extends BaseClass {
     public boolean creditTransferPageOkBtnCheck() {
         creditTransfer = new CreditTransfer(driver);
         homePage = new HomePage(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_CreditTransferElement))).perform();
         creditTransfer.PressOkButton();
         if(homePage.getPageTitle().equals("diu")){
@@ -197,15 +193,14 @@ public class NavigationDrawer extends BaseClass {
 
     public String getSettingsPageTitleText() {
         settings = new Settings(driver);
-        action = new TouchAction(driver);
+        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_SettingsElement))).perform();
         return settings.getSettingsPageTitle();
     }
-
-    public String getAboutPageTitleText() {
-       about = new About(driver);
-        action = new TouchAction(driver);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_AboutElement))).perform();
-        return about.getAboutPageTitle();
+    public void enterSettingsPageFromNavDrawer() {
+        TouchAction action = new TouchAction(driver);
+        scrolling(.20, .20, .80, .20);
+        action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_SettingsElement))).perform();
     }
+
 }
