@@ -42,6 +42,12 @@ public class Settings {
     public void selectCampus(String campusName) {
         TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(campusOptionElement))).perform();
+        int totalCampusOption = driver.findElements(By.id("android:id/text1")).size();
+        for (int i = 0; i < totalCampusOption; i++) {
+            AndroidElement option = (AndroidElement) driver.findElementsById("android:id/text1").get(i);
+            option.click();
+            action.tap(new TapOptions().withElement(new ElementOption().withElement(campusOptionElement))).perform();
+        }
         driver.findElement(By.xpath("//*[@resource-id='android:id/text1' and contains(@text,'" + campusName + " Campus')]")).click();
     }
 
@@ -61,16 +67,15 @@ public class Settings {
         }
     }
 
-    public void selectNotifyNextClass(String time) {
+    public void selectNotifyNextClass(String time) throws InterruptedException {
         TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(notifyNextClassOptionElement))).perform();
-//        int totalTimeOption = driver.findElements(By.id("android:id/text1")).size();
-//        System.out.println(":::::::::"+totalTimeOption);
-//        for (int i = 0; i < totalTimeOption; i++) {
-//            driver.findElements(By.xpath("\"//android.widget.CheckedTextView[@index='" + i + "']\"")).click();
-//
-//        }
-
+        int totalTimeOption = driver.findElements(By.id("android:id/text1")).size();
+        for (int i = 0; i < totalTimeOption; i++) {
+           AndroidElement option = (AndroidElement) driver.findElementsById("android:id/text1").get(i);
+           option.click();
+           action.tap(new TapOptions().withElement(new ElementOption().withElement(notifyNextClassOptionElement))).perform();
+        }
 
         driver.findElement(By.xpath("//*[@resource-id='android:id/text1' and contains(@text,'" + time + "')]")).click();
     }
