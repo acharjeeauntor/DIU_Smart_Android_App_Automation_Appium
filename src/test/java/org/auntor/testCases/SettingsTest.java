@@ -6,13 +6,22 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+
+
+/*
+Test case:
+1. verify if user can select campus or not
+2. verify if user can select NoticeAndContest or not
+3. verify if user can select Next Class notification or not
+*/
+
 public class SettingsTest extends BaseClass {
 
     HomePage homePage;
     NavigationDrawer navigationDrawer;
     Settings settings;
 
-    @Test(priority = 1, description = "")
+    @Test(priority = 1, description = "verify if user can select campus or not")
     public void checkCampusSelection() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         settings = new Settings(driver);
@@ -31,7 +40,7 @@ public class SettingsTest extends BaseClass {
         }
     }
 
-    @Test(priority = 2, description = "")
+    @Test(priority = 2, description = "verify if user can select NoticeAndContest or not")
     public void checkNoticeAndContestToggleButton() throws IOException, InterruptedException {
       settings = new Settings(driver);
         if (settings.pressNoticeAndContestToggleButton()) {
@@ -43,7 +52,7 @@ public class SettingsTest extends BaseClass {
             Assert.assertTrue(false);
         }
     }
-    @Test(priority = 3, description = "")
+    @Test(priority = 3, description = "verify if user can select Next Class notification or not")
     public void checkNotifyNextClassSelection() throws IOException, InterruptedException {
         settings = new Settings(driver);
         settings.selectNotifyNextClass("Before 30 minutes");
@@ -56,6 +65,5 @@ public class SettingsTest extends BaseClass {
             Assert.assertTrue(false);
         }
     }
-
 
 }

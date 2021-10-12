@@ -34,7 +34,6 @@ public class Settings {
     @AndroidFindBy(xpath = "//*[@resource-id='android:id/summary' and contains(@text,'Before 30 minutes')]")
     AndroidElement timeSelectedElement;
 
-
     public String getSettingsPageTitle() {
         return settingsPageTitleElement.getText();
     }

@@ -98,6 +98,13 @@ public class NavigationDrawer extends BaseClass {
         return classRoutine.getHeaderText();
     }
 
+    public void enterClassRoutineFromNavDrawer() {
+        classRoutine = new ClassRoutine(driver);
+        TouchAction action = new TouchAction(driver);
+        action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_ClassRoutineElement))).perform();
+        closeAppSplashScreen();
+    }
+
     public String getNoticeBoardPageHeader() {
         noticeBoard = new NoticeBoard(driver);
         TouchAction action = new TouchAction(driver);
