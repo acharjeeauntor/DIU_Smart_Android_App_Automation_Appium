@@ -31,9 +31,9 @@ public class Reporting implements ITestListener {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         String repName = "Test-Report-" + timeStamp + ".html";
 
-        htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/test-output/" + repName);
+        htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/src/main/java/org/auntor/test-output/" + repName);
 
-        htmlReporter.loadXMLConfig(System.getProperty("user.dir") + "/extent-config.xml");
+        htmlReporter.loadXMLConfig(System.getProperty("user.dir") + "/src/main/java/org/auntor/Configuration/extent-config.xml");
 
         extent = new ExtentReports();
 
@@ -65,7 +65,7 @@ public class Reporting implements ITestListener {
         logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName(), ExtentColor.RED));
 
 
-        String screenshotPath = System.getProperty("user.dir") + "/Screenshots/" + result.getName() + ".png";
+        String screenshotPath = System.getProperty("user.dir") + "/src/main/java/org/auntor/Screenshots/" + result.getName() + ".png";
 
         File f = new File(screenshotPath);
 

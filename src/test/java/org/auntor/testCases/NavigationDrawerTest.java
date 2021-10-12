@@ -28,6 +28,9 @@ import java.io.IOException;
 import java.time.Year;
 import java.util.Date;
 
+import static org.auntor.utilities.Common.closeAppSplashScreen;
+import static org.auntor.utilities.Common.scrolling;
+
 public class NavigationDrawerTest extends BaseClass {
     HomePage homePage;
     StudentPortalPage studentPortalPage;
@@ -39,7 +42,7 @@ public class NavigationDrawerTest extends BaseClass {
     public void checkNavigationDrawerOptionAndText() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
-        closeAppSplashScreen();
+        closeAppSplashScreen(driver);
         homePage.pressNavigationDrawer();
         if (navigationDrawer.getNavigationDrawerHeaderText().equals("DIU")) {
             logger.info("Test Passed");
@@ -189,7 +192,7 @@ public class NavigationDrawerTest extends BaseClass {
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
         Thread.sleep(2000);
-        scrolling(.20, .20, .80, .20);
+        scrolling(driver,.20, .20, .80, .20);
         if (navigationDrawer.rulesAndRegulationPageOkBtnCheck()) {
             logger.info("Test Passed");
             Assert.assertTrue(true);

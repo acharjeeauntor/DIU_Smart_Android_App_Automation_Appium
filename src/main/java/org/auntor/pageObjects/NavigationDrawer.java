@@ -10,7 +10,7 @@ import io.appium.java_client.touch.TapOptions;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.ElementOption;
 import io.appium.java_client.touch.offset.PointOption;
-import org.auntor.testCases.BaseClass;
+import org.auntor.utilities.Common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 
@@ -20,7 +20,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.time.Duration;
 import java.util.List;
 
-public class NavigationDrawer extends BaseClass {
+public class NavigationDrawer extends Common {
     AndroidDriver driver;
     ClassRoutine classRoutine;
     NoticeBoard noticeBoard;
@@ -74,14 +74,14 @@ public class NavigationDrawer extends BaseClass {
 
     public boolean scrollNavigationDrawer() {
         int count = 0;
-        scrolling(.20, .20, .80, .20);
+        scrolling(driver,.20, .20, .80, .20);
         List<AndroidElement> elements = driver.findElements(By.id("com.daffodilvarsity.diu:id/material_drawer_name"));
         for (int i = 0; i < elements.size() - 1; i++) {
             if (elements.get(i).getText().equals("ADMIN PORTAL")) {
                 count++;
             }
         }
-        scrolling(.20, .20, .20, .80);
+        scrolling(driver,.20, .20, .20, .80);
         if (count == 1) {
             return true;
         } else {
@@ -94,7 +94,7 @@ public class NavigationDrawer extends BaseClass {
         classRoutine = new ClassRoutine(driver);
        TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_ClassRoutineElement))).perform();
-        closeAppSplashScreen();
+        closeAppSplashScreen(driver);
         return classRoutine.getHeaderText();
     }
 
@@ -102,7 +102,7 @@ public class NavigationDrawer extends BaseClass {
         classRoutine = new ClassRoutine(driver);
         TouchAction action = new TouchAction(driver);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_ClassRoutineElement))).perform();
-        closeAppSplashScreen();
+        closeAppSplashScreen(driver);
     }
 
     public String getNoticeBoardPageHeader() {
@@ -206,7 +206,7 @@ public class NavigationDrawer extends BaseClass {
     }
     public void enterSettingsPageFromNavDrawer() {
         TouchAction action = new TouchAction(driver);
-        scrolling(.20, .20, .80, .20);
+        scrolling(driver,.20, .20, .80, .20);
         action.tap(new TapOptions().withElement(new ElementOption().withElement(nav_SettingsElement))).perform();
     }
 

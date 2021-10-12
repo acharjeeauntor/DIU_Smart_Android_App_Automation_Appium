@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+import static org.auntor.utilities.Common.closeAppSplashScreen;
+
 public class ClassRoutineTest extends BaseClass {
     HomePage homePage;
     NavigationDrawer navigationDrawer;
@@ -19,7 +21,7 @@ public class ClassRoutineTest extends BaseClass {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         classRoutine = new ClassRoutine(driver);
-        closeAppSplashScreen();
+        closeAppSplashScreen(driver);
         homePage.pressNavigationDrawer();
         Thread.sleep(1000);
         navigationDrawer.enterClassRoutineFromNavDrawer();

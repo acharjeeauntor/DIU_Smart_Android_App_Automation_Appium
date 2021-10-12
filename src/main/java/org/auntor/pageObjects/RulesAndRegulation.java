@@ -4,10 +4,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.auntor.testCases.BaseClass;
+import org.auntor.utilities.Common;
 import org.openqa.selenium.support.PageFactory;
 
-public class RulesAndRegulation extends BaseClass {
+public class RulesAndRegulation{
     AndroidDriver driver;
 
 

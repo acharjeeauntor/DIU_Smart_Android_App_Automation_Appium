@@ -1,12 +1,13 @@
 package org.auntor.utilities;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Properties;
 
 public class Config {
 
 	Properties pro;
-	File src = new File("./Configuration/config.properties");
+	File src = new File(System.getProperty("user.dir") +"/src/main/java/org/auntor/Configuration/config.properties");
 	
 	public Config() {
 		try {

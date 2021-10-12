@@ -6,6 +6,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+import static org.auntor.utilities.Common.closeAppSplashScreen;
+
 
 
 /*
@@ -26,7 +28,7 @@ public class SettingsTest extends BaseClass {
         homePage = new HomePage(driver);
         settings = new Settings(driver);
         navigationDrawer = new NavigationDrawer(driver);
-        closeAppSplashScreen();
+        closeAppSplashScreen(driver);
         homePage.pressNavigationDrawer();
         navigationDrawer.enterSettingsPageFromNavDrawer();
         settings.selectCampus("Main");

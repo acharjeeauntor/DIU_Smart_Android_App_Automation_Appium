@@ -76,7 +76,7 @@ public class BaseClass {
         dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
         dc.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 14);
         dc.setCapability("appium:chromeOptions", ImmutableMap.of("w3c", false));
-        dc.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/TestApk/" + testApkName + ".apk");
+        dc.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/src/main/java/org/auntor/TestApk/" + testApkName + ".apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), dc);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -111,23 +111,7 @@ public class BaseClass {
         driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"))");
     }
 
-    public void scrolling(double startXPercentage,double endXPercentage,double startYPercentage,double endYPercentage){
-        Dimension dim = driver.manage().window().getSize();
-        int height = dim.getHeight();
-        int width = dim.getWidth();
 
-        int startX = (int)(width*startXPercentage);
-        int endX = (int)(width*endXPercentage);
-        int startY = (int)(height*startYPercentage);
-        int endY =(int)(height*endYPercentage);
-
-        TouchAction action = new TouchAction(driver);
-        action.press(PointOption.point(startX,startY))
-                .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
-                .moveTo(PointOption.point(endX,endY))
-                .release()
-                .perform();
-    }
 
 
     public static void captureScreen(String testCaseName) throws IOException {
@@ -138,9 +122,6 @@ public class BaseClass {
         System.out.println("Screenshot Taken");
     }
 
-    public static void closeAppSplashScreen(){
-        driver.findElement(By.id("com.daffodilvarsity.diu:id/tv_dismiss")).click();
-    }
 
 
 }

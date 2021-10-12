@@ -20,6 +20,8 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+import static org.auntor.utilities.Common.closeAppSplashScreen;
+
 public class HomePageTest extends BaseClass {
     HomePage homePage;
     StudentPortalPage studentPortalPage;
@@ -29,7 +31,7 @@ public class HomePageTest extends BaseClass {
     @Test(priority = 1, description = "Verify that Home page title is DIU")
     public void verifyPageTitle() throws IOException {
         homePage = new HomePage(driver);
-        closeAppSplashScreen();
+        closeAppSplashScreen(driver);
         String title = homePage.getPageTitle();
         if (title.equals("diu")) {
             logger.info("Test Passed");
