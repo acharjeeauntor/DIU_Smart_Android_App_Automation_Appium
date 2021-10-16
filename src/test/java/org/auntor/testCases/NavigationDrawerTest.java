@@ -20,13 +20,14 @@ Test Cases:
  */
 
 
+import io.qameta.allure.*;
 import org.auntor.pageObjects.*;
+import org.auntor.utilities.BaseClass;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.time.Year;
-import java.util.Date;
 
 import static org.auntor.utilities.Common.closeAppSplashScreen;
 import static org.auntor.utilities.Common.scrolling;
@@ -39,232 +40,264 @@ public class NavigationDrawerTest extends BaseClass {
     NavigationDrawer navigationDrawer;
 
     @Test(priority = 1, description = "Verify Navigation Drawer option is working properly and header text is visible or not")
+    @Description("Verify Navigation Drawer option is working properly and header text is visible or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavigationDrawerOptionAndText() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         closeAppSplashScreen(driver);
         homePage.pressNavigationDrawer();
         if (navigationDrawer.getNavigationDrawerHeaderText().equals("DIU")) {
-            logger.info("Test Passed");
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkNavigationDrawerOptionAndText");
             Assert.assertTrue(false);
         }
 
     }
 
     @Test(priority = 2, description = "Verify Navigation Drawer is scrolling properly or not")
+    @Description("Verify Navigation Drawer is scrolling properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavigationDrawerScrolling() throws IOException, InterruptedException {
         navigationDrawer = new NavigationDrawer(driver);
         homePage = new HomePage(driver);
         homePage.pressNavigationDrawer();
         if (navigationDrawer.scrollNavigationDrawer()) {
-            logger.info("Test Passed");
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkNavigationDrawerScrolling");
             Assert.assertTrue(false);
         }
 
     }
 
-        @Test(priority = 3,description = "Verify Navigation Drawer option Class Routine is working properly or not")
+    @Test(priority = 3, description = "Verify Navigation Drawer option Class Routine is working properly or not")
+    @Description("Verify Navigation Drawer option Class Routine is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavDrawerClassRoutineOption() throws IOException {
         navigationDrawer = new NavigationDrawer(driver);
-        if(navigationDrawer.getClassRoutinePageHeader().equals("Setup Semester")){
-            logger.info("Test Passed");
+        if (navigationDrawer.getClassRoutinePageHeader().equals("Setup Semester")) {
             driver.navigate().back();
             Assert.assertTrue(true);
-        }else{
-            logger.warn("Test Failed");
-            captureScreen("checkNavDrawerClassRoutineOption");
+        } else {
             Assert.assertTrue(false);
         }
 
     }
-    @Test(priority = 4,description = "Verify Navigation Drawer option Notice Board is working properly or not")
+
+    @Test(priority = 4, description = "Verify Navigation Drawer option Notice Board is working properly or not")
+    @Description("Verify Navigation Drawer option Notice Board is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavDrawerNoticeBoardOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
-        if(navigationDrawer.getNoticeBoardPageHeader().equals("Notice Board")){
-            logger.info("Test Passed");
+        if (navigationDrawer.getNoticeBoardPageHeader().equals("Notice Board")) {
             driver.navigate().back();
             Assert.assertTrue(true);
-        }else{
-            logger.warn("Test Failed");
-            captureScreen("checkNavDrawerNoticeBoardOption");
+        } else {
             Assert.assertTrue(false);
         }
 
     }
 
 
-    @Test(priority = 5,description = "Verify Navigation Drawer option Student portal is working properly or not")
+    @Test(priority = 5, description = "Verify Navigation Drawer option Student portal is working properly or not")
+    @Description("Verify Navigation Drawer option Student portal is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavStudentPortalOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
-        if(navigationDrawer.getStudentPortalPageHeader().equals("Requested Resource Not Found!")){
-            logger.info("Test Passed");
+        if (navigationDrawer.getStudentPortalPageHeader().equals("Requested Resource Not Found!")) {
             driver.navigate().back();
             Assert.assertTrue(true);
-        }else{
-            logger.warn("Test Failed");
-            captureScreen("checkNavStudentPortalOption");
+        } else {
             Assert.assertTrue(false);
         }
 
     }
-    @Test(priority = 6,description = "Verify Navigation Drawer option Administration is working properly or not")
+
+    @Test(priority = 6, description = "Verify Navigation Drawer option Administration is working properly or not")
+    @Description("Verify Navigation Drawer option Administration is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavAdministrationOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
-        if(navigationDrawer.getAdministrationSearchHintText().equals("Search Member")){
-            logger.info("Test Passed");
+        if (navigationDrawer.getAdministrationSearchHintText().equals("Search Member")) {
             driver.navigate().back();
             Assert.assertTrue(true);
-        }else{
-            logger.warn("Test Failed");
-            captureScreen("checkNavAdministrationOption");
+        } else {
             Assert.assertTrue(false);
         }
 
     }
 
-    @Test(priority = 7,description = "Verify Navigation Drawer option Faculty Members is working properly or not")
+    @Test(priority = 7, description = "Verify Navigation Drawer option Faculty Members is working properly or not")
+    @Description("Verify Navigation Drawer option Faculty Members is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavFacultyMemberOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
-        if(navigationDrawer.getFacultyMemberSearchHintText().equals("Search Member")){
-            logger.info("Test Passed");
+        if (navigationDrawer.getFacultyMemberSearchHintText().equals("Search Member")) {
             driver.navigate().back();
             Assert.assertTrue(true);
-        }else{
-            logger.warn("Test Failed");
-            captureScreen("checkNavFacultyMemberOption");
+        } else {
             Assert.assertTrue(false);
         }
 
     }
-    @Test(priority = 8,description = "Verify Navigation Drawer option Academic Result is working properly or not")
+
+    @Test(priority = 8, description = "Verify Navigation Drawer option Academic Result is working properly or not")
+    @Description("Verify Navigation Drawer option Academic Result is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavAcademicResultOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
-        if(navigationDrawer.getAcademicResultPageHeaderText().equals("Academic Result")){
-            logger.info("Test Passed");
+        if (navigationDrawer.getAcademicResultPageHeaderText().equals("Academic Result")) {
             driver.navigate().back();
             Assert.assertTrue(true);
-        }else{
-            logger.warn("Test Failed");
-            captureScreen("checkNavAcademicResultOption");
+        } else {
             Assert.assertTrue(false);
         }
 
     }
+
     @Test(priority = 9, description = "Verify Navigation Drawer option Academic Calendar is working properly or not")
+    @Description("Verify Navigation Drawer option Academic Calendar is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavAcademicCalenderOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
         int currentYear = Year.now().getValue();
         if (navigationDrawer.getAcademicCalenderYearText() == currentYear) {
-            logger.info("Test Passed");
             driver.navigate().back();
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkNavAcademicCalenderOption");
             Assert.assertTrue(false);
         }
 
     }
 
     @Test(priority = 10, description = "Verify Navigation Drawer option Rules and Regulation is working properly or not")
+    @Description("Verify Navigation Drawer option Rules and Regulation is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavRulesAndRegulationOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
         Thread.sleep(2000);
-        scrolling(driver,.20, .20, .80, .20);
+        scrolling(driver, .20, .20, .80, .20);
         if (navigationDrawer.rulesAndRegulationPageOkBtnCheck()) {
-            logger.info("Test Passed");
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkNavRulesAndRegulationOption");
             Assert.assertTrue(false);
         }
 
     }
 
     @Test(priority = 11, description = " Verify Navigation Drawer option Examination Guideline is working properly or not")
+    @Description("Verify Navigation Drawer option Examination Guideline is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavExaminationGuidelineOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
         if (navigationDrawer.examinationGuidelinePageOkBtnCheck()) {
-            logger.info("Test Passed");
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkNavExaminationGuidelineOption");
             Assert.assertTrue(false);
         }
 
     }
 
     @Test(priority = 12, description = "Verify Navigation Drawer option Prospective Students is working properly or not")
+    @Description("Verify Navigation Drawer option Prospective Students is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavProspectiveStudentsOption() throws IOException, InterruptedException {
 
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
         if (navigationDrawer.prospectiveStudentsPageOkBtnCheck()) {
-            logger.info("Test Passed");
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkNavProspectiveStudentsOption");
             Assert.assertTrue(false);
         }
 
     }
 
     @Test(priority = 13, description = "Verify Navigation Drawer option Credit Transfer is working properly or not")
+    @Description("Verify Navigation Drawer option Credit Transfer is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavCreditTransferOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
         if (navigationDrawer.creditTransferPageOkBtnCheck()) {
-            logger.info("Test Passed");
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkNavCreditTransferOption");
             Assert.assertTrue(false);
         }
 
     }
 
     @Test(priority = 14, description = "Verify Navigation Drawer option Settings is working properly or not")
+    @Description("Verify Navigation Drawer option Settings is working properly or not")
+    @Epic("Epp1")
+    @Feature("Navigation Drawer")
+    @Story("Story1")
+    @Severity(SeverityLevel.CRITICAL)
     public void checkNavSettingsOption() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
         homePage.pressNavigationDrawer();
         if (navigationDrawer.getSettingsPageTitleText().equals("Student Info")) {
-            logger.info("Test Passed");
             driver.navigate().back();
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkNavSettingsOption");
             Assert.assertTrue(false);
         }
 

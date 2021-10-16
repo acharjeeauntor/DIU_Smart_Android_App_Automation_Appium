@@ -1,91 +1,64 @@
 package org.auntor.utilities;
-
-
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.reporter.configuration.ChartLocation;
-import com.aventstack.extentreports.reporter.configuration.Theme;
+import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Attachment;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 
-public class Reporting implements ITestListener {
-    public ExtentHtmlReporter htmlReporter;
-    public ExtentReports extent;
-    public ExtentTest logger;
+public class Reporting implements ITestListener{
 
 
+    private static String getTestMethodName(ITestResult iTestResult) {
+        return iTestResult.getMethod().getConstructorOrMethod().getName();
+    }
+
+    @Attachment
+    public byte[] saveFailureScreenShot(AndroidDriver driver) {
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Attachment(value = "{0}", type = "text/plain")
+    public static String saveTextLog(String message) {
+        return message;
+    }
 
     @Override
-    public void onStart(ITestContext context) {
-        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-        String repName = "Test-Report-" + timeStamp + ".html";
-
-        htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/src/main/java/org/auntor/test-output/" + repName);
-
-        htmlReporter.loadXMLConfig(System.getProperty("user.dir") + "/src/main/java/org/auntor/Configuration/extent-config.xml");
-
-        extent = new ExtentReports();
-
-        extent.attachReporter(htmlReporter);
-        extent.setSystemInfo("Host name", "localhost");
-        extent.setSystemInfo("Environment", "QA");
-        extent.setSystemInfo("user", "Auntor Auntor");
-
-        htmlReporter.config().setDocumentTitle("DUISmartApp");
-        htmlReporter.config().setReportName("Functional Test Automation Report");
-        htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
-        htmlReporter.config().setTheme(Theme.DARK);
-
+    public void onStart(ITestContext iTestContext) {
+        System.out.println("I am in onStart method " + iTestContext.getName());
+        iTestContext.setAttribute("WebDriver", BaseClass.driver);
     }
 
 
     @Override
-    public void onTestSuccess(ITestResult result) {
-        logger = extent.createTest(result.getName());
-        logger.log(Status.PASS, MarkupHelper.createLabel(result.getName(), ExtentColor.GREEN));
+    public void onTestSuccess(ITestResult iTestResult) {
+        System.out.println("I am in onTestSuccess method " + getTestMethodName(iTestResult) + " succeed");
     }
 
 
     @Override
-    public void onTestFailure(ITestResult result) {
-
-
-        logger = extent.createTest(result.getName());
-        logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName(), ExtentColor.RED));
-
-
-        String screenshotPath = System.getProperty("user.dir") + "/src/main/java/org/auntor/Screenshots/" + result.getName() + ".png";
-
-        File f = new File(screenshotPath);
-
-        if (f.exists()) {
-            try {
-                logger.fail("Screenshot is below:" + logger.addScreenCaptureFromPath(screenshotPath));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public void onTestFailure(ITestResult iTestResult) {
+        System.out.println("I am in onTestFailure method " + getTestMethodName(iTestResult) + " failed");
+        Object testClass = iTestResult.getInstance();
+        AndroidDriver driver = BaseClass.driver;
+        // Allure ScreenShot and SaveTestLog
+        if (driver instanceof AndroidDriver) {
+            System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
+            saveFailureScreenShot(driver);
         }
+        saveTextLog(getTestMethodName(iTestResult) + " failed and screenshot taken!");
     }
 
     @Override
-    public void onTestSkipped(ITestResult result) {
-        logger = extent.createTest(result.getName());
-        logger.log(Status.SKIP, MarkupHelper.createLabel(result.getName(), ExtentColor.ORANGE));
+    public void onTestSkipped(ITestResult iTestResult) {
+        System.out.println("I am in onTestSkipped method " + getTestMethodName(iTestResult) + " skipped");
     }
 
     @Override
-    public void onFinish(ITestContext context) {
-        extent.flush();
+    public void onFinish(ITestContext iTestContext) {
+        System.out.println("I am in onFinish method " + iTestContext.getName());
     }
 }

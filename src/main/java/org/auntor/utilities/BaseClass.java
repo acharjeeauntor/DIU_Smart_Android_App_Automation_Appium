@@ -1,25 +1,15 @@
-package org.auntor.testCases;
+package org.auntor.utilities;
 import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import org.auntor.utilities.Config;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
+import org.testng.ITestContext;
+import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,15 +18,13 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
-public class BaseClass {
-    public static AndroidDriver<AndroidElement> driver;
-    public static Logger logger;
-    public static AppiumDriverLocalService service;
 
+public class BaseClass{
+    public static AndroidDriver<AndroidElement> driver;
+    public static AppiumDriverLocalService service;
+    
     @BeforeTest
     public void automationEnvStart() throws IOException, InterruptedException {
-        logger = Logger.getLogger("DIUSmartApp");
-        PropertyConfigurator.configure("log4j.properties");
         startServer();
         capabilities();
     }
@@ -45,6 +33,19 @@ public class BaseClass {
     public void automationEnvStop() {
         driver.quit();
         service.stop();
+    }
+
+    @BeforeSuite
+    void setAllureEnvironment(){
+        Config config = new Config();
+        allureEnvironmentWriter(
+                ImmutableMap.<String, String>builder()
+                        .put("Test Device Type","ABC")
+                        .put("Test Device Name",config.getDeviceName())
+                        .put("Test Device Os Version", config.getDeviceOsVersion())
+                        .put("Apk Name", config.getApkName())
+                        .build(), System.getProperty("user.dir")
+                        + "/allure-results/");
     }
 
 
@@ -79,7 +80,6 @@ public class BaseClass {
         dc.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/src/main/java/org/auntor/TestApk/" + testApkName + ".apk");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), dc);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
         return driver;
     }
 
@@ -104,22 +104,6 @@ public class BaseClass {
 
         Runtime.getRuntime().exec(System.getProperty("user.dir") + "Configuration\\startEmulator.bat");
         Thread.sleep(6000);
-    }
-
-
-    public void scrollToView(String text) {
-        driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"))");
-    }
-
-
-
-
-    public static void captureScreen(String testCaseName) throws IOException {
-        TakesScreenshot ts = (TakesScreenshot) driver;
-        File source = ts.getScreenshotAs(OutputType.FILE);
-        File target = new File(System.getProperty("user.dir") + "/Screenshots/" + testCaseName + ".png");
-        FileUtils.copyFile(source, target);
-        System.out.println("Screenshot Taken");
     }
 
 

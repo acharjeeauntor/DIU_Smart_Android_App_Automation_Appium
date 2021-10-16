@@ -1,8 +1,10 @@
 package org.auntor.testCases;
 
+import io.qameta.allure.*;
 import org.auntor.pageObjects.ClassRoutine;
 import org.auntor.pageObjects.HomePage;
 import org.auntor.pageObjects.NavigationDrawer;
+import org.auntor.utilities.BaseClass;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -17,6 +19,11 @@ public class ClassRoutineTest extends BaseClass {
 
 
     @Test(priority = 1)
+    @Description("Verify that Empty course related toast message is showing properly or not")
+    @Epic("Epp1")
+    @Feature("Toast Message")
+    @Story("St1")
+    @Severity(SeverityLevel.MINOR)
     public void checkEmptyClassRoutine() throws InterruptedException, IOException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawer(driver);
@@ -26,11 +33,8 @@ public class ClassRoutineTest extends BaseClass {
         Thread.sleep(1000);
         navigationDrawer.enterClassRoutineFromNavDrawer();
         if (classRoutine.getEmptyRoutineHintText().equals("Please add courses of this semester") && classRoutine.getToastMessageText().equals("Please add at least one Course")) {
-            logger.info("Test Passed");
             Assert.assertTrue(true);
         } else {
-            logger.warn("Test Failed");
-            captureScreen("checkEmptyClassRoutine");
             Assert.assertTrue(false);
         }
     }
