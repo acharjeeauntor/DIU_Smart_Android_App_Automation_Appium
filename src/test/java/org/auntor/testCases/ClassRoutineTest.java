@@ -39,5 +39,15 @@ public class ClassRoutineTest extends BaseClass {
         }
     }
 
+    @Test(priority = 2)
+    @Description("Verify that Empty course related toast message is showing properly or not")
+    @Epic("Epp1")
+    @Feature("Toast Message")
+    @Story("St1")
+    @Severity(SeverityLevel.MINOR)
+    public void checkSemesterRoutineDate() throws InterruptedException, IOException {
+        classRoutine = new ClassRoutine(driver);
+        classRoutine.selectSemesterStartDate();
+    }
 
 }

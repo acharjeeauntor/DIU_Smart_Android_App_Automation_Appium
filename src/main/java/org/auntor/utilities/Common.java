@@ -34,4 +34,9 @@ public class Common {
                 .perform();
     }
 
+    public void scrollToView(AndroidDriver driver,String text) {
+        driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"))");
+    }
+
+
 }
