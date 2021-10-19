@@ -40,14 +40,49 @@ public class ClassRoutineTest extends BaseClass {
     }
 
     @Test(priority = 2)
-    @Description("Verify that Empty course related toast message is showing properly or not")
+    @Description("Verify that Start and End Semester Date can select or not")
     @Epic("Epp1")
-    @Feature("Toast Message")
+    @Feature("Class Routine")
     @Story("St1")
     @Severity(SeverityLevel.MINOR)
     public void checkSemesterRoutineDate() throws InterruptedException, IOException {
         classRoutine = new ClassRoutine(driver);
         classRoutine.selectSemesterStartDate();
+        classRoutine.selectSemesterEndDate();
+        if(classRoutine.getTotalSemesterDay()==46){
+            Assert.assertTrue(true);
+        }else {
+            Assert.assertTrue(false);
+        }
     }
 
+    @Test(priority = 3)
+    @Description("Verify if a new Course is added from class Routine section or not")
+    @Epic("Epp1")
+    @Feature("Class Routine")
+    @Story("St1")
+    @Severity(SeverityLevel.CRITICAL)
+    public void checkAddANewCourse() throws InterruptedException, IOException {
+        classRoutine = new ClassRoutine(driver);
+        if(classRoutine.addANewCourse("CSE123")){
+            Assert.assertTrue(true);
+        }else {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test(priority = 4)
+    @Description("Verify if empty schedule Data Text is showing properly or not")
+    @Epic("Epp1")
+    @Feature("Class Routine")
+    @Story("St1")
+    @Severity(SeverityLevel.NORMAL)
+    public void checkEmptyScheduleText() throws InterruptedException, IOException {
+        classRoutine = new ClassRoutine(driver);
+        if(classRoutine.emptyScheduleData().equals("No Schedule Added")){
+            Assert.assertTrue(true);
+        }else {
+            Assert.assertTrue(false);
+        }
+    }
 }
