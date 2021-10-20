@@ -1,9 +1,7 @@
 package org.auntor.testCases;
 
 import io.qameta.allure.*;
-import org.auntor.pageObjects.ClassRoutine;
-import org.auntor.pageObjects.HomePage;
-import org.auntor.pageObjects.NavigationDrawer;
+import org.auntor.pageObjects.*;
 import org.auntor.utilities.BaseClass;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -16,6 +14,8 @@ public class ClassRoutineTest extends BaseClass {
     HomePage homePage;
     NavigationDrawer navigationDrawer;
     ClassRoutine classRoutine;
+    SchedulePage schedulePage;
+    AddToRoutinePage addToRoutinePage;
 
 
     @Test(priority = 1)
@@ -49,9 +49,9 @@ public class ClassRoutineTest extends BaseClass {
         classRoutine = new ClassRoutine(driver);
         classRoutine.selectSemesterStartDate();
         classRoutine.selectSemesterEndDate();
-        if(classRoutine.getTotalSemesterDay()==46){
+        if (classRoutine.getTotalSemesterDay() == 46) {
             Assert.assertTrue(true);
-        }else {
+        } else {
             Assert.assertTrue(false);
         }
     }
@@ -64,9 +64,9 @@ public class ClassRoutineTest extends BaseClass {
     @Severity(SeverityLevel.CRITICAL)
     public void checkAddANewCourse() throws InterruptedException, IOException {
         classRoutine = new ClassRoutine(driver);
-        if(classRoutine.addANewCourse("CSE123")){
+        if (classRoutine.addANewCourse("CSE123")) {
             Assert.assertTrue(true);
-        }else {
+        } else {
             Assert.assertTrue(false);
         }
     }
@@ -79,7 +79,26 @@ public class ClassRoutineTest extends BaseClass {
     @Severity(SeverityLevel.NORMAL)
     public void checkEmptyScheduleText() throws InterruptedException, IOException {
         classRoutine = new ClassRoutine(driver);
-        if(classRoutine.emptyScheduleData().equals("No Schedule Added")){
+        if (classRoutine.emptyScheduleData().equals("No Schedule Added")) {
+            Assert.assertTrue(true);
+        } else {
+            Assert.assertTrue(false);
+        }
+    }
+
+
+    @Test(priority = 5)
+    @Description("Verify if a new schedule can add today section or not")
+    @Epic("Epp1")
+    @Feature("Class Routine")
+    @Story("St1")
+    @Severity(SeverityLevel.NORMAL)
+    public void checkAddANewSchedule() throws InterruptedException, IOException {
+        schedulePage = new SchedulePage(driver);
+        addToRoutinePage = new AddToRoutinePage(driver);
+        schedulePage.addNewSchedule();
+        addToRoutinePage.AddAClassToday("A5");
+        if(addToRoutinePage.isTodayClassVisible("CSE123")){
             Assert.assertTrue(true);
         }else {
             Assert.assertTrue(false);
