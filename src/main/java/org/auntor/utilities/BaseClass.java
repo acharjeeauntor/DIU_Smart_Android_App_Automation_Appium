@@ -23,13 +23,13 @@ public class BaseClass{
     public static AndroidDriver<AndroidElement> driver;
     public static AppiumDriverLocalService service;
     
-    @BeforeTest
+    @BeforeClass
     public void automationEnvStart() throws IOException, InterruptedException {
         startServer();
         capabilities();
     }
 
-    @AfterTest
+    @AfterClass
     public void automationEnvStop() {
         driver.quit();
         service.stop();

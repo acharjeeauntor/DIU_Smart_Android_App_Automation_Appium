@@ -16,7 +16,7 @@ public class Common {
     public static void closeAppSplashScreen(AndroidDriver driver){
         driver.findElement(By.id("com.daffodilvarsity.diu:id/tv_dismiss")).click();
     }
-    public static void scrolling(AndroidDriver driver,double startXPercentage,double endXPercentage,double startYPercentage,double endYPercentage){
+    public static void scrollingAndSwapping(AndroidDriver driver,double startXPercentage,double endXPercentage,double startYPercentage,double endYPercentage){
         Dimension dim = driver.manage().window().getSize();
         int height = dim.getHeight();
         int width = dim.getWidth();

@@ -12,8 +12,8 @@ Test Cases:
 * */
 
 import io.qameta.allure.*;
-import org.auntor.pageObjects.AcademicResult;
-import org.auntor.pageObjects.FacultyMember;
+import org.auntor.pageObjects.AcademicResultPage;
+import org.auntor.pageObjects.FacultyMemberPage;
 import org.auntor.pageObjects.HomePage;
 import org.auntor.pageObjects.StudentPortalPage;
 import org.auntor.utilities.BaseClass;
@@ -27,12 +27,12 @@ import static org.auntor.utilities.Common.closeAppSplashScreen;
 public class HomePageTest extends BaseClass {
     HomePage homePage;
     StudentPortalPage studentPortalPage;
-    FacultyMember facultyMember;
-    AcademicResult academicResult;
+    FacultyMemberPage facultyMember;
+    AcademicResultPage academicResult;
 
     @Test(priority = 1, description = "Verify that Home page title is DIU")
     @Description("Verify that Home page title is DIU")
-    @Epic("Epp1")
+    @Epic("Epic-1")
     @Feature("Home Page")
     @Story("Story1")
     @Severity(SeverityLevel.CRITICAL)
@@ -49,7 +49,7 @@ public class HomePageTest extends BaseClass {
 
     @Test(priority = 2, description = "Verify that current Weather information is Showing properly or not")
     @Description("Verify that current Weather information is Showing properly or not")
-    @Epic("Epp1")
+    @Epic("Epic-1")
     @Feature("Home Page")
     @Story("Story1")
     @Severity(SeverityLevel.CRITICAL)
@@ -64,7 +64,7 @@ public class HomePageTest extends BaseClass {
 
     @Test(priority = 3, description = "Verify that Current Day is showing properly or not")
     @Description("Verify that Current Day is showing properly or not")
-    @Epic("Epp1")
+    @Epic("Epic-1")
     @Feature("Home Page")
     @Story("Story1")
     @Severity(SeverityLevel.CRITICAL)
@@ -89,7 +89,7 @@ public class HomePageTest extends BaseClass {
 
     @Test(priority = 4, description = "Verify that STUDENT PORTAL button is working properly or not")
     @Description("Verify that STUDENT PORTAL button is working properly or not")
-    @Epic("Epp1")
+    @Epic("Epic-1")
     @Feature("Home Page")
     @Story("Story1")
     @Severity(SeverityLevel.CRITICAL)
@@ -107,7 +107,7 @@ public class HomePageTest extends BaseClass {
 
     @Test(priority = 5, description = "Verify that Admission Portal button is working properly or not")
     @Description("Verify that Admission Portal button is working properly or not")
-    @Epic("Epp1")
+    @Epic("Epic-1")
     @Feature("Home Page")
     @Story("Story1")
     @Severity(SeverityLevel.BLOCKER)
@@ -122,13 +122,13 @@ public class HomePageTest extends BaseClass {
 
     @Test(priority = 6, description = "Verify that Faculty Member button is working properly or not")
     @Description("Verify that Faculty Member button is working properly or not")
-    @Epic("Epp1")
+    @Epic("Epic-1")
     @Feature("Home Page")
-    @Story("Story1")
+    @Story("Story2")
     @Severity(SeverityLevel.BLOCKER)
     public void checkFacultyMemberButton() throws IOException {
         homePage = new HomePage(driver);
-        facultyMember = new FacultyMember(driver);
+        facultyMember = new FacultyMemberPage(driver);
         homePage.clickFacultyMemberBtn();
         if (facultyMember.getSearchHintText().equals("Search Member")) {
             driver.navigate().back();
@@ -140,13 +140,13 @@ public class HomePageTest extends BaseClass {
 
     @Test(priority = 7, description = "Verify that Academic Result button is working properly or not")
     @Description("Verify that Academic Result button is working properly or not")
-    @Epic("Epp1")
+    @Epic("Epic-1")
     @Feature("Home Page")
-    @Story("Story1")
+    @Story("Story2")
     @Severity(SeverityLevel.BLOCKER)
     public void checkAcademicResultButton() throws IOException, InterruptedException {
         homePage = new HomePage(driver);
-        academicResult = new AcademicResult(driver);
+        academicResult = new AcademicResultPage(driver);
         homePage.clickAcademicResultBtn();
         if (academicResult.getHeaderText().equals("Academic Result")) {
             driver.navigate().back();

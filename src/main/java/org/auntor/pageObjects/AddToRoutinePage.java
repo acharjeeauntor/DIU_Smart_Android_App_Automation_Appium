@@ -5,10 +5,12 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import org.auntor.utilities.Common;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.Calendar;
 import java.util.Date;
+
 
 public class AddToRoutinePage {
     AndroidDriver driver;
@@ -51,15 +53,18 @@ public class AddToRoutinePage {
     }
 
 
-    public void AddAClassTomorrow(String roomNumber) {
-        Date date = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        int dayNumberOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        if(dayNumberOfWeek==6){
-            dayNumberOfWeek=-1;
+    public void AddAClassTomorrow(String roomNumber) throws InterruptedException {
+        Date date2 = new Date();
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(date2);
+      int todayNumber = c2.get(Calendar.DAY_OF_WEEK);
+        driver.findElementByXPath("//android.widget.ImageView[@index='" + todayNumber + "']").click();
+        Thread.sleep(2000);
+        if(todayNumber==6){
+            driver.findElementByXPath("//android.widget.ImageView[@index='0']").click();
+        }else{
+            driver.findElementByXPath("//android.widget.ImageView[@index='" + (todayNumber+1) + "']").click();
         }
-        driver.findElementByXPath("//android.widget.ImageView[@index='" + (dayNumberOfWeek+1) + "']").click();
         roomNumberElement.sendKeys(roomNumber);
         submitRoutineElement.click();
     }

@@ -3,7 +3,9 @@ package org.auntor.testCases;
 import io.qameta.allure.*;
 import org.auntor.pageObjects.*;
 import org.auntor.utilities.BaseClass;
+import org.auntor.utilities.XLUtils;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -22,58 +24,102 @@ Test case:
 public class SettingsTest extends BaseClass {
 
     HomePage homePage;
-    NavigationDrawer navigationDrawer;
-    Settings settings;
+    NavigationDrawerPage navigationDrawer;
+    SettingsPage settings;
 
-    @Test(priority = 1, description = "Verify if user can select campus or not")
-    @Description("Verify if user can select campus or not")
-    @Epic("Epp1")
+    @Test(priority =1, description = "Verify Navigation Drawer option Settings is working properly or not")
+    @Description("Verify Navigation Drawer option Settings is working properly or not")
+    @Epic("Epic-2")
     @Feature("Navigation Drawer")
-    @Story("Story1")
+    @Story("Story4")
     @Severity(SeverityLevel.CRITICAL)
-    public void checkCampusSelection() throws IOException, InterruptedException {
+    public void checkNavigateToSettings() throws InterruptedException {
         homePage = new HomePage(driver);
-        settings = new Settings(driver);
-        navigationDrawer = new NavigationDrawer(driver);
+        navigationDrawer = new NavigationDrawerPage(driver);
         closeAppSplashScreen(driver);
         homePage.pressNavigationDrawer();
-        navigationDrawer.enterSettingsPageFromNavDrawer();
-        settings.selectCampus("Main");
-        if (settings.getSelectedCampusName().equals("Main Campus")) {
+        if (navigationDrawer.getSettingsPageTitleText().equals("Student Info")) {
             Assert.assertTrue(true);
         } else {
             Assert.assertTrue(false);
         }
     }
 
-    @Test(priority = 2, description = "Verify if user can select NoticeAndContest or not")
-    @Description("Verify if user can select NoticeAndContest or not")
-    @Epic("Epp1")
+    @Test(priority = 2, description = "Verify if user can select campus or not",dataProvider = "CampusNameDataProvider")
+    @Description("Verify if user can select campus or not")
+    @Epic("Epic-3")
     @Feature("Navigation Drawer")
-    @Story("Story1")
+    @Story("Story5")
+    @Severity(SeverityLevel.CRITICAL)
+    public void checkCampusSelection(String campusName) throws IOException, InterruptedException {
+        settings = new SettingsPage(driver);
+        settings.selectCampus(campusName);
+        if (settings.getSelectedCampusName(campusName).equals(campusName)) {
+            Assert.assertTrue(true);
+        } else {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test(priority = 3, description = "Verify if user can select NoticeAndContest or not")
+    @Description("Verify if user can select NoticeAndContest or not")
+    @Epic("Epic-3")
+    @Feature("Navigation Drawer")
+    @Story("Story5")
     @Severity(SeverityLevel.CRITICAL)
     public void checkNoticeAndContestToggleButton() throws IOException, InterruptedException {
-      settings = new Settings(driver);
+      settings = new SettingsPage(driver);
         if (settings.pressNoticeAndContestToggleButton()) {
             Assert.assertTrue(true);
         } else {
             Assert.assertTrue(false);
         }
     }
-    @Test(priority = 3, description = "Verify if user can select Next Class notification or not")
+    @Test(priority = 4,dataProvider = "NotifyNextClassDataProvider",description = "Verify if user can select Next Class notification or not")
     @Description("Verify if user can select Next Class notification or not")
-    @Epic("Epp1")
+    @Epic("Epic-3")
     @Feature("Navigation Drawer")
-    @Story("Story1")
+    @Story("Story5")
     @Severity(SeverityLevel.CRITICAL)
-    public void checkNotifyNextClassSelection() throws IOException, InterruptedException {
-        settings = new Settings(driver);
-        settings.selectNotifyNextClass("Before 30 minutes");
-        if (settings.getSelectedTime().equals("Before 30 minutes")) {
+    public void checkNotifyNextClassSelection(String notifyNextClass) throws IOException, InterruptedException {
+        settings = new SettingsPage(driver);
+        settings.selectNotifyNextClass(notifyNextClass);
+        if (settings.getSelectedTime(notifyNextClass).equals(notifyNextClass)) {
             Assert.assertTrue(true);
         } else {
             Assert.assertTrue(false);
         }
+    }
+    @DataProvider(name = "CampusNameDataProvider")
+    Object[][] getCampusNameData() throws IOException {
+        String path = System.getProperty("user.dir")
+                + "/src/main/java/org/auntor/testData/DiuSmartAppData.xlsx";
+        int rowNum = XLUtils.getRowCount(path, "campusName");
+        int colCount = XLUtils.getCellCount(path, "campusName", 1);
+        Object[][] data = new Object[rowNum][colCount];
+
+        for (int i = 1; i <= rowNum; i++) {
+            for (int j = 0; j < colCount; j++) {
+                data[i - 1][j] = XLUtils.getCellData(path, "campusName", i, j);
+            }
+        }
+        return data;
+    }
+
+    @DataProvider(name = "NotifyNextClassDataProvider")
+    Object[][] getNotifyNextClassData() throws IOException {
+        String path = System.getProperty("user.dir")
+                + "/src/main/java/org/auntor/testData/DiuSmartAppData.xlsx";
+        int rowNum = XLUtils.getRowCount(path, "notifyNextClass");
+        int colCount = XLUtils.getCellCount(path, "notifyNextClass", 1);
+        Object[][] data = new Object[rowNum][colCount];
+
+        for (int i = 1; i <= rowNum; i++) {
+            for (int j = 0; j < colCount; j++) {
+                data[i - 1][j] = XLUtils.getCellData(path, "notifyNextClass", i, j);
+            }
+        }
+        return data;
     }
 
 }

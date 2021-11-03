@@ -7,6 +7,8 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.auntor.utilities.Common;
 import org.openqa.selenium.support.PageFactory;
 
+import static org.auntor.utilities.Common.scrollingAndSwapping;
+
 public class SchedulePage {
     AndroidDriver driver;
 
@@ -19,8 +21,13 @@ public class SchedulePage {
     AndroidElement addNewScheduleIconElement;
 
 
-    public void addNewSchedule(){
+    public void addNewScheduleForToday(){
         addNewScheduleIconElement.click();
     }
+    public void addNewScheduleForTomorrow(){
+        scrollingAndSwapping(driver,.90,.10,.50,.50);
+        addNewScheduleIconElement.click();
+    }
+
 
 }
