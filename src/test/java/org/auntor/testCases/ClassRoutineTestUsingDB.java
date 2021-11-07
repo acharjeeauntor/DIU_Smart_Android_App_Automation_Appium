@@ -13,28 +13,37 @@ import java.sql.*;
 
 import static org.auntor.utilities.Common.closeAppSplashScreen;
 
-public class ClassRoutineTest extends BaseClass {
+public class ClassRoutineTestUsingDB extends BaseClass {
     HomePage homePage;
     NavigationDrawerPage navigationDrawer;
     ClassRoutinePage classRoutine;
     SchedulePage schedulePage;
     AddToRoutinePage addToRoutinePage;
+    public String courseCode;
+    public String roomNumber;
+    public String hint_Text_For_Schedule;
+    public String toast_Message_For_Schedule;
+    public String empty_Schedule_Text;
 
-    @Test(priority = 1, dataProvider = "RoutineDataProvider")
+
+    @Test(priority = 1)
     @Description("Verify that Empty course related toast message is showing properly or not")
     @Epic("Epic-4")
     @Feature("Toast Message")
     @Story("story6")
     @Severity(SeverityLevel.MINOR)
-    public void checkEmptyClassRoutine(String code, String roomNumber, String hintText, String toastMsg, String emptyText) throws InterruptedException, IOException, SQLException {
+    public void checkEmptyClassRoutine() throws InterruptedException, IOException, SQLException {
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawerPage(driver);
         classRoutine = new ClassRoutinePage(driver);
         closeAppSplashScreen(driver);
+        getDataFromDB();
+        Thread.sleep(7000);
         homePage.pressNavigationDrawer();
         Thread.sleep(1000);
         navigationDrawer.enterClassRoutineFromNavDrawer();
-        if (classRoutine.getEmptyRoutineHintText().equals(hintText) && classRoutine.getToastMessageText().equals(toastMsg)) {
+        System.out.println(":::::::::"+hint_Text_For_Schedule);
+        if (classRoutine.getEmptyRoutineHintText().equals(hint_Text_For_Schedule) && classRoutine.getToastMessageText().equals(toast_Message_For_Schedule)) {
             Assert.assertTrue(true);
         } else {
             Assert.assertTrue(false);
@@ -58,30 +67,30 @@ public class ClassRoutineTest extends BaseClass {
         }
     }
 
-    @Test(priority = 3, dataProvider = "RoutineDataProvider")
+    @Test(priority = 3)
     @Description("Verify if a new Course is added from class Routine section or not")
     @Epic("Epic-4")
     @Feature("Class Routine")
     @Story("story6")
     @Severity(SeverityLevel.CRITICAL)
-    public void checkAddANewCourse(String code, String roomNumber, String hintText, String toastMsg, String emptyText) throws InterruptedException, IOException {
+    public void checkAddANewCourse() throws InterruptedException, IOException {
         classRoutine = new ClassRoutinePage(driver);
-        if (classRoutine.addANewCourse(code)) {
+        if (classRoutine.addANewCourse(courseCode)) {
             Assert.assertTrue(true);
         } else {
             Assert.assertTrue(false);
         }
     }
 
-    @Test(priority = 4, dataProvider = "RoutineDataProvider")
+    @Test(priority = 4)
     @Description("Verify if empty schedule Data Text is showing properly or not")
     @Epic("Epic-4")
     @Feature("Class Routine")
     @Story("story6")
     @Severity(SeverityLevel.NORMAL)
-    public void checkEmptyScheduleText(String code, String roomNumber, String hintText, String toastMsg, String emptyText) throws InterruptedException, IOException {
+    public void checkEmptyScheduleText() throws InterruptedException, IOException {
         classRoutine = new ClassRoutinePage(driver);
-        if (classRoutine.emptyScheduleData().equals(emptyText)) {
+        if (classRoutine.emptyScheduleData().equals(empty_Schedule_Text)) {
             Assert.assertTrue(true);
         } else {
             Assert.assertTrue(false);
@@ -89,59 +98,60 @@ public class ClassRoutineTest extends BaseClass {
     }
 
 
-    @Test(priority = 5, dataProvider = "RoutineDataProvider")
+    @Test(priority = 5)
     @Description("Verify if a new schedule can add today section or not")
     @Epic("Epic-4")
     @Feature("Class Routine")
     @Story("story6")
     @Severity(SeverityLevel.NORMAL)
-    public void checkAddANewScheduleForToday(String code, String roomNumber, String hintText, String toastMsg, String emptyText) throws InterruptedException, IOException {
+    public void checkAddANewScheduleForToday() throws InterruptedException, IOException {
         schedulePage = new SchedulePage(driver);
         addToRoutinePage = new AddToRoutinePage(driver);
         schedulePage.addNewScheduleForToday();
         addToRoutinePage.AddAClassToday(roomNumber);
-        if (addToRoutinePage.isTodayClassVisible(code)) {
+        if (addToRoutinePage.isTodayClassVisible(courseCode)) {
             Assert.assertTrue(true);
         } else {
             Assert.assertTrue(false);
         }
     }
 
-    @Test(priority = 6, dataProvider = "RoutineDataProvider")
+    @Test(priority = 6)
     @Description("Verify if a new schedule can add Tomorrow section or not")
     @Epic("Epic-4")
     @Feature("Class Routine")
     @Story("story6")
     @Severity(SeverityLevel.NORMAL)
-    public void checkAddANewScheduleForTomorrow(String code, String roomNumber, String hintText, String toastMsg, String emptyText) throws InterruptedException, IOException {
+    public void checkAddANewScheduleForTomorrow() throws InterruptedException, IOException {
         schedulePage = new SchedulePage(driver);
         addToRoutinePage = new AddToRoutinePage(driver);
         schedulePage.addNewScheduleForTomorrow();
         addToRoutinePage.AddAClassTomorrow(roomNumber);
-        if (addToRoutinePage.isTodayClassVisible(code)) {
+        if (addToRoutinePage.isTodayClassVisible(courseCode)) {
             Assert.assertTrue(true);
         } else {
             Assert.assertTrue(false);
         }
     }
 
-    @DataProvider(name = "RoutineDataProvider")
-    Object[][] getRoutineData() throws IOException {
-        String path = System.getProperty("user.dir")
-                + "/src/main/java/org/auntor/testData/DiuSmartAppData.xlsx";
-        int rowNum = XLUtils.getRowCount(path, "classRoutine");
-        int colCount = XLUtils.getCellCount(path, "classRoutine", 1);
-        System.out.println("Row:::" + rowNum + "column:::" + colCount);
-        Object[][] data = new Object[rowNum][colCount];
 
-        for (int i = 1; i <= rowNum; i++) {
-            for (int j = 0; j < colCount; j++) {
-                data[i - 1][j] = XLUtils.getCellData(path, "classRoutine", i, j);
-            }
-
+    public void getDataFromDB() throws SQLException {
+        String host = "localhost";
+        String port = "3306";
+        Connection con = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/diusmartapp", "root", "abcd85284");
+        System.out.println(":::::::::"+con);
+        Statement statement = con.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM classRoutine");
+        System.out.println(":::::::::"+resultSet);
+        while (resultSet.next()){
+            courseCode = resultSet.getString("Course_Code");
+            roomNumber = resultSet.getString("Room_Number");
+            hint_Text_For_Schedule = resultSet.getString("Hint_Text_For_Schedule");
+            toast_Message_For_Schedule = resultSet.getString("Toast_Message_For_Schedule");
+            System.out.println(":::::::::"+toast_Message_For_Schedule);
+            empty_Schedule_Text = resultSet.getString("Empty_Schedule_Text");
         }
-        return data;
-    }
 
+    }
 
 }
