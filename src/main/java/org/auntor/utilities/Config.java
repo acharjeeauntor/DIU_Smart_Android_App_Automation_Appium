@@ -44,6 +44,20 @@ public class Config {
 		String deviceOsVersion  = pro.getProperty("TestDeviceOsVersion");
 		return deviceOsVersion;
 	}
+	public String getBSUserName() {
+		String bsUserName  = pro.getProperty("BSUsername");
+		return bsUserName;
+	}
+	public String getBSKey() {
+		String bsKey  = pro.getProperty("BSKey");
+		return bsKey;
+	}
+
+	public String getBSDIUSmartAppKey() {
+		String bsAppKey  = pro.getProperty("BSDIUSmartAppKey");
+		return bsAppKey;
+	}
+
 
 
 

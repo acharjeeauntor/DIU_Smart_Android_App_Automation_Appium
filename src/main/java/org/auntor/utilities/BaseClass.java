@@ -8,7 +8,7 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 
 import io.appium.java_client.service.local.AppiumServiceBuilder;
-import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.*;
 
 import java.io.File;
@@ -16,28 +16,41 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.URL;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 
 public class BaseClass{
+    static Config config = new Config();
     public static AppiumDriver driver;
     public AppiumDriverLocalService service;
+    public static final String UserName=config.getBSUserName();
+    public static final String Key= config.getBSKey();
+    public static final String URL="https://"+UserName+":"+Key+"@hub-cloud.browserstack.com/wd/hub";
+
     
     @BeforeClass
     public void automationEnvStart() throws IOException, InterruptedException {
-       startServer();
-        capabilities();
+        //startServer();
+        if(config.getDeviceType().equals("Emulator")){
+            startServer();
+            capabilities();
+        } else if (config.getDeviceType().equals("BrowserStack")) {
+            bsCapabilities();
+        }
     }
 
     @AfterClass
     public void automationEnvStop() {
-        driver.quit();
-        service.stop();
+        if(config.getDeviceType().equals("Emulator")){
+            driver.quit();
+            service.stop();
+        } else if (config.getDeviceType().equals("BrowserStack")) {
+            driver.quit();
+        }
     }
 
     @BeforeSuite
     void setAllureEnvironment(){
-        Config config = new Config();
+        //Config config = new Config();
         allureEnvironmentWriter(
                 ImmutableMap.<String, String>builder()
                         .put("Test Device Type","ABC")
@@ -68,7 +81,6 @@ public class BaseClass{
 
 
     public static AppiumDriver capabilities() throws IOException, InterruptedException {
-        Config config = new Config();
         String testApkName = config.getApkName();
         String deviceName = config.getDeviceName();
 
@@ -83,6 +95,20 @@ public class BaseClass{
 
         driver = new AppiumDriver(new URL("http://127.0.0.1:4723/"), options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        return driver;
+    }
+
+    public static AppiumDriver bsCapabilities() throws IOException {
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability("deviceName","Google Pixel 3");
+        caps.setCapability("os_version","9.0");
+        caps.setCapability("Project","DIU Smart App Test Automation");
+        caps.setCapability("build","6.7");
+        caps.setCapability("name","Run DIU Smart App Test Automation in BrowserStack");
+        caps.setCapability("app",config.getBSDIUSmartAppKey());
+
+        driver = new AppiumDriver(new URL(URL),caps);
+
         return driver;
     }
 

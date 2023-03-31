@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DIUSmartApp">
+    <listeners>
+        <listener class-name="org.auntor.utilities.Reporting"/>
+    </listeners>
+    <test name="DIUSmartApp" thread-count="5">
+        <classes>
+ <class name="org.auntor.testCases.HomePageTest"/>
+            <class name="org.auntor.testCases.NavigationDrawerTest"/>
+ <class name="org.auntor.testCases.ClassRoutineTest"/>
+<class name="org.auntor.testCases.SettingsTest"/>
+<class name="org.auntor.testCases.ClassRoutineTestUsingDB"/>
+         </classes>
+     </test>
+ </suite>
