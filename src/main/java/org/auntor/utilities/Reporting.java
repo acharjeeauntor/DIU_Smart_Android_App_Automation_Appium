@@ -1,5 +1,5 @@
 package org.auntor.utilities;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -17,7 +17,7 @@ public class Reporting implements ITestListener{
     }
 
     @Attachment
-    public byte[] saveFailureScreenShot(AndroidDriver driver) {
+    public byte[] saveFailureScreenShot(AppiumDriver driver) {
         return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
     }
 
@@ -43,9 +43,9 @@ public class Reporting implements ITestListener{
     public void onTestFailure(ITestResult iTestResult) {
         System.out.println("I am in onTestFailure method " + getTestMethodName(iTestResult) + " failed");
         Object testClass = iTestResult.getInstance();
-        AndroidDriver driver = BaseClass.driver;
+        AppiumDriver driver = BaseClass.driver;
         // Allure ScreenShot and SaveTestLog
-        if (driver instanceof AndroidDriver) {
+        if (driver instanceof AppiumDriver) {
             System.out.println("Screenshot captured for test case:" + getTestMethodName(iTestResult));
             saveFailureScreenShot(driver);
         }

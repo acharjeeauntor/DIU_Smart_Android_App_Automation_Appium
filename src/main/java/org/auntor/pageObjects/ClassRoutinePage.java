@@ -1,57 +1,55 @@
 package org.auntor.pageObjects;
 
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.offset.ElementOption;
 import org.auntor.utilities.Common;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import static org.auntor.utilities.Common.scrollingAndSwapping;
 
 public class ClassRoutinePage {
-    AndroidDriver driver;
+    AppiumDriver driver;
     Common common;
 
-    public ClassRoutinePage(AndroidDriver driver){
+    public ClassRoutinePage(AppiumDriver driver){
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver),this);
     }
 
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/tvCategory")
-    AndroidElement classRoutineHeaderElement;
+    WebElement classRoutineHeaderElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/noCourseAdded")
-    AndroidElement emptyRoutineHintTextElement;
+    WebElement emptyRoutineHintTextElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/submitRoutine")
-    AndroidElement routineSubmitIconElement;
+    WebElement routineSubmitIconElement;
     @AndroidFindBy(xpath = "//android.widget.Toast[1]")
-    AndroidElement addCourseToastElement;
+    WebElement addCourseToastElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/startSemester")
-    AndroidElement startSemesterOptionElement;
+    WebElement startSemesterOptionElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/endSemester")
-    AndroidElement endSemesterOptionElement;
+    WebElement endSemesterOptionElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/date_picker_year")
-    AndroidElement datePickerYearElement;
+    WebElement datePickerYearElement;
     @AndroidFindBy(xpath = "//*[@resource-id='com.daffodilvarsity.diu:id/month_text_view' and contains(@text,'2021')]")
-    AndroidElement selectSemesterYearElement;
+    WebElement selectSemesterYearElement;
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='25 September 2021']")
-    AndroidElement selectSemesterStartDateElement;
+    WebElement selectSemesterStartDateElement;
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='10 November 2021']")
-    AndroidElement selectSemesterEndDateElement;
+    WebElement selectSemesterEndDateElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/ok")
-    AndroidElement datePickerOkBtnElement;
+    WebElement datePickerOkBtnElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/dayDiff")
-    AndroidElement totalSemesterDayElement;
+    WebElement totalSemesterDayElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/fabSetupSemester")
-    AndroidElement addCourseFabBtnElement;
+    WebElement addCourseFabBtnElement;
     @AndroidFindBy(id = "android:id/input")
-    AndroidElement courseInputFieldElement;
+    WebElement courseInputFieldElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/buttonDefaultPositive")
-    AndroidElement courseAddBtnElement;
+    WebElement courseAddBtnElement;
     @AndroidFindBy(id = "com.daffodilvarsity.diu:id/routineEmptyNoData")
-    AndroidElement emptyScheduleTextElement;
+    WebElement emptyScheduleTextElement;
 
 
     public String  getHeaderText(){
@@ -61,33 +59,30 @@ public class ClassRoutinePage {
         return emptyRoutineHintTextElement.getText();
     }
     public String getToastMessageText(){
-        TouchAction action = new TouchAction(driver);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(routineSubmitIconElement))).perform();
+        routineSubmitIconElement.click();
        return addCourseToastElement.getAttribute("name");
     }
 
 
     public void selectSemesterStartDate() throws InterruptedException {
-        TouchAction action = new TouchAction(driver);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(startSemesterOptionElement))).perform();
+        startSemesterOptionElement.click();
         datePickerYearElement.click();
         Thread.sleep(2000);
         scrollingAndSwapping(driver,.50,.50,.50,.20);
         selectSemesterYearElement.click();
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(selectSemesterStartDateElement))).perform();
+        selectSemesterStartDateElement.click();
         datePickerOkBtnElement.click();
     }
 
 
     public void selectSemesterEndDate() throws InterruptedException {
-        TouchAction action = new TouchAction(driver);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(endSemesterOptionElement))).perform();
+        endSemesterOptionElement.click();
         datePickerYearElement.click();
         Thread.sleep(2000);
         scrollingAndSwapping(driver,.50,.50,.50,.20);
         selectSemesterYearElement.click();
         scrollingAndSwapping(driver,.50,.50,.50,.80);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(selectSemesterEndDateElement))).perform();
+        selectSemesterEndDateElement.click();
         datePickerOkBtnElement.click();
     }
 
@@ -101,12 +96,11 @@ public class ClassRoutinePage {
         addCourseFabBtnElement.click();
         courseInputFieldElement.sendKeys(courseName);
         courseAddBtnElement.click();
-       return driver.findElementByXPath("//*[@text=\""+courseName+"\"]").isDisplayed();
+       return driver.findElement(By.xpath("//*[@text=\""+courseName+"\"]")).isDisplayed();
     }
 
     public String emptyScheduleData() throws InterruptedException {
-        TouchAction action = new TouchAction(driver);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(routineSubmitIconElement))).perform();
+        routineSubmitIconElement.click();
         return emptyScheduleTextElement.getText();
     }
 }

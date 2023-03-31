@@ -1,14 +1,14 @@
 package org.auntor.utilities;
 import com.google.common.collect.ImmutableMap;
-import io.appium.java_client.TouchAction;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.ITestContext;
+
 import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
+
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 import org.testng.annotations.*;
 
 import java.io.File;
@@ -20,12 +20,12 @@ import java.util.concurrent.TimeUnit;
 
 
 public class BaseClass{
-    public static AndroidDriver<AndroidElement> driver;
-    public static AppiumDriverLocalService service;
+    public static AppiumDriver driver;
+    public AppiumDriverLocalService service;
     
     @BeforeClass
     public void automationEnvStart() throws IOException, InterruptedException {
-        startServer();
+       startServer();
         capabilities();
     }
 
@@ -54,7 +54,12 @@ public class BaseClass{
         boolean flag = checkIfServerIsRunning(4723);
         if (!flag) {
 
-            service = AppiumDriverLocalService.buildDefaultService();
+            service = new AppiumServiceBuilder().usingDriverExecutable(new File("/usr/local/bin/node"))
+                    .withAppiumJS(new File("/usr/local/lib/node_modules/appium/build/lib/main.js"))
+                    .withIPAddress("127.0.0.1")
+                    .withLogFile(new File("appium.log"))
+                    .withTimeout(Duration.ofSeconds(200))
+                    .usingPort(4723).build();
             service.start();
         }
         return service;
@@ -62,24 +67,22 @@ public class BaseClass{
     }
 
 
-    public static AndroidDriver<AndroidElement> capabilities() throws IOException, InterruptedException {
-
+    public static AppiumDriver capabilities() throws IOException, InterruptedException {
         Config config = new Config();
         String testApkName = config.getApkName();
-        String deviceType = config.getDeviceType();
+        String deviceName = config.getDeviceName();
 
-        DesiredCapabilities dc = new DesiredCapabilities();
+        UiAutomator2Options options = new UiAutomator2Options()
+                .setPlatformName("Android")
+                .setDeviceName(deviceName)
+                .setUdid("emulator-5554")
+                .setAutomationName("UiAutomator2")
+                .setApp(System.getProperty("user.dir") + "/src/main/java/org/auntor/TestApk/" + testApkName + ".apk")
+                .setNoReset(false)
+                .eventTimings();
 
-        if (deviceType.contains("emulator")) {
-            startEmulator();
-        }
-        dc.setCapability(MobileCapabilityType.DEVICE_NAME, deviceType);
-        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
-        dc.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 14);
-        dc.setCapability("appium:chromeOptions", ImmutableMap.of("w3c", false));
-        dc.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir") + "/src/main/java/org/auntor/TestApk/" + testApkName + ".apk");
-        driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), dc);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver = new AppiumDriver(new URL("http://127.0.0.1:4723/"), options);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         return driver;
     }
 
@@ -100,11 +103,6 @@ public class BaseClass{
         return isServerRunning;
     }
 
-    public static void startEmulator() throws IOException, InterruptedException {
-
-        Runtime.getRuntime().exec(System.getProperty("user.dir") + "Configuration\\startEmulator.bat");
-        Thread.sleep(6000);
-    }
 
 
 

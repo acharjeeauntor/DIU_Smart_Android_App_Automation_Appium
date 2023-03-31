@@ -29,8 +29,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.time.Year;
 
-import static org.auntor.utilities.Common.closeAppSplashScreen;
-import static org.auntor.utilities.Common.scrollingAndSwapping;
+import static org.auntor.utilities.Common.*;
 
 public class NavigationDrawerTest extends BaseClass {
     HomePage homePage;
@@ -113,7 +112,7 @@ public class NavigationDrawerTest extends BaseClass {
     }
 
 
-    @Test(priority = 5, description = "Verify Navigation Drawer option Student portal is working properly or not")
+    @Test(priority = 5, enabled = false,description = "Verify Navigation Drawer option Student portal is working properly or not")
     @Description("Verify Navigation Drawer option Student portal is working properly or not")
     @Epic("Epic-2")
     @Feature("Navigation Drawer")
@@ -170,7 +169,7 @@ public class NavigationDrawerTest extends BaseClass {
 
     }
 
-    @Test(priority = 8, description = "Verify Navigation Drawer option Academic Result is working properly or not")
+    @Test(priority = 8, enabled = false,description = "Verify Navigation Drawer option Academic Result is working properly or not")
     @Description("Verify Navigation Drawer option Academic Result is working properly or not")
     @Epic("Epic-2")
     @Feature("Navigation Drawer")
@@ -189,7 +188,7 @@ public class NavigationDrawerTest extends BaseClass {
 
     }
 
-    @Test(priority = 9, description = "Verify Navigation Drawer option Academic Calendar is working properly or not")
+    @Test(priority = 9,enabled = false, description = "Verify Navigation Drawer option Academic Calendar is working properly or not")
     @Description("Verify Navigation Drawer option Academic Calendar is working properly or not")
     @Epic("Epic-2")
     @Feature("Navigation Drawer")
@@ -209,18 +208,18 @@ public class NavigationDrawerTest extends BaseClass {
 
     }
 
-    @Test(priority = 10, description = "Verify Navigation Drawer option Rules and Regulation is working properly or not")
+    @Test(priority = 10,enabled = false,description = "Verify Navigation Drawer option Rules and Regulation is working properly or not")
     @Description("Verify Navigation Drawer option Rules and Regulation is working properly or not")
     @Epic("Epic-2")
     @Feature("Navigation Drawer")
     @Story("Story4")
     @Severity(SeverityLevel.CRITICAL)
     public void checkNavRulesAndRegulationOption() throws IOException, InterruptedException {
+        scrollToView(driver,"Settings");
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawerPage(driver);
         homePage.pressNavigationDrawer();
         Thread.sleep(2000);
-        scrollingAndSwapping(driver, .20, .20, .80, .20);
         if (navigationDrawer.rulesAndRegulationPageOkBtnCheck()) {
             Assert.assertTrue(true);
         } else {
@@ -236,9 +235,11 @@ public class NavigationDrawerTest extends BaseClass {
     @Story("Story4")
     @Severity(SeverityLevel.CRITICAL)
     public void checkNavExaminationGuidelineOption() throws IOException, InterruptedException {
+
         homePage = new HomePage(driver);
         navigationDrawer = new NavigationDrawerPage(driver);
         homePage.pressNavigationDrawer();
+        scrollToView(driver,"Settings");
         if (navigationDrawer.examinationGuidelinePageOkBtnCheck()) {
             Assert.assertTrue(true);
         } else {

@@ -1,70 +1,52 @@
 package org.auntor.pageObjects;
 
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.offset.ElementOption;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 public class SettingsPage {
-    AndroidDriver driver;
+    AppiumDriver driver;
 
 
-    public SettingsPage(AndroidDriver driver) {
+    public SettingsPage(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
     @AndroidFindBy(xpath = "//*[@resource-id='android:id/title' and contains(@text,'Student Info')]")
-    AndroidElement settingsPageTitleElement;
+    WebElement settingsPageTitleElement;
     @AndroidFindBy(xpath = "//*[@resource-id='android:id/title' and contains(@text,'Your Campus')]")
-    AndroidElement campusOptionElement;
+    WebElement campusOptionElement;
     @AndroidFindBy(xpath = "//*[@resource-id='android:id/title' and contains(@text,'Notice')]")
-    AndroidElement noticeToggleBtnElement;
+    WebElement noticeToggleBtnElement;
     @AndroidFindBy(xpath = "//*[@resource-id='android:id/title' and contains(@text,'Contest')]")
-    AndroidElement contestToggleBtnElement;
+    WebElement contestToggleBtnElement;
     @AndroidFindBy(xpath = "//*[@resource-id='android:id/title' and contains(@text,'Notify Next Class')]")
-    AndroidElement notifyNextClassOptionElement;
+    WebElement notifyNextClassOptionElement;
 
     public String getSettingsPageTitle() {
         return settingsPageTitleElement.getText();
     }
 
     public void selectCampus(String campusName) {
-        TouchAction action = new TouchAction(driver);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(campusOptionElement))).perform();
-//        int totalCampusOption = driver.findElements(By.id("android:id/text1")).size();
-//        for (int i = 0; i < totalCampusOption; i++) {
-//            AndroidElement option = (AndroidElement) driver.findElementsById("android:id/text1").get(i);
-//            option.click();
-//            action.tap(new TapOptions().withElement(new ElementOption().withElement(campusOptionElement))).perform();
-//        }
+        campusOptionElement.click();
         driver.findElement(By.xpath("//*[@resource-id='android:id/text1' and contains(@text,'" + campusName + "')]")).click();
     }
 
     public String getSelectedCampusName(String campus) {
-        return driver.findElementByXPath("//*[@resource-id='android:id/summary' and contains(@text,'" + campus + "')]").getText();
+        return driver.findElement(By.xpath("//*[@resource-id='android:id/summary' and contains(@text,'" + campus + "')]")).getText();
     }
 
-    public boolean pressNoticeAndContestToggleButton() {
-        TouchAction action = new TouchAction(driver);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(noticeToggleBtnElement))).perform();
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(contestToggleBtnElement))).perform();
-        AndroidElement e1 = (AndroidElement) driver.findElement(By.xpath("//*[@resource-id='android:id/switch_widget' and contains(@text,'Off')]"));
-        if (e1.getText().equals("Off")) {
-            return true;
-        } else {
-            return false;
-        }
+    public void pressNoticeAndContestToggleButton() {
+        noticeToggleBtnElement.click();
+        contestToggleBtnElement.click();
     }
 
-    public void selectNotifyNextClass(String time) throws InterruptedException {
-        TouchAction action = new TouchAction(driver);
-        action.tap(new TapOptions().withElement(new ElementOption().withElement(notifyNextClassOptionElement))).perform();
+    public void selectNotifyNextClass(String time){
+        notifyNextClassOptionElement.click();
 //        int totalTimeOption = driver.findElements(By.id("android:id/text1")).size();
 //        for (int i = 0; i < totalTimeOption; i++) {
 //           AndroidElement option = (AndroidElement) driver.findElementsById("android:id/text1").get(i);
@@ -76,7 +58,7 @@ public class SettingsPage {
     }
 
     public String getSelectedTime(String time) {
-        return driver.findElementByXPath("//*[@resource-id='android:id/summary' and contains(@text,'" + time + "')]").getText();
+        return driver.findElement(By.xpath("//*[@resource-id='android:id/summary' and contains(@text,'" + time + "')]")).getText();
     }
 
 }

@@ -1,22 +1,21 @@
 package org.auntor.utilities;
 
-import io.appium.java_client.FindsByAndroidUIAutomator;
+import io.appium.java_client.AppiumBy;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 
 public class Common {
-    public static void closeAppSplashScreen(AndroidDriver driver){
+    public static void closeAppSplashScreen(AppiumDriver driver){
         driver.findElement(By.id("com.daffodilvarsity.diu:id/tv_dismiss")).click();
     }
-    public static void scrollingAndSwapping(AndroidDriver driver,double startXPercentage,double endXPercentage,double startYPercentage,double endYPercentage){
+    public static void scrollingAndSwapping(AppiumDriver driver, double startXPercentage, double endXPercentage, double startYPercentage, double endYPercentage){
         Dimension dim = driver.manage().window().getSize();
         int height = dim.getHeight();
         int width = dim.getWidth();
@@ -26,7 +25,7 @@ public class Common {
         int startY = (int)(height*startYPercentage);
         int endY =(int)(height*endYPercentage);
 
-        TouchAction action = new TouchAction(driver);
+        TouchAction action = new TouchAction((PerformsTouchActions) driver);
         action.press(PointOption.point(startX,startY))
                 .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(2)))
                 .moveTo(PointOption.point(endX,endY))
@@ -34,8 +33,8 @@ public class Common {
                 .perform();
     }
 
-    public void scrollToView(AndroidDriver driver,String text) {
-        driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"))");
+    public static void scrollToView(AppiumDriver driver,String text) {
+        driver.findElement(AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + text + "\"))"));
     }
 
 

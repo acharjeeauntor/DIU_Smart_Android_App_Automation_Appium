@@ -38,7 +38,7 @@ public class HomePageTest extends BaseClass {
     @Severity(SeverityLevel.CRITICAL)
     public void verifyPageTitle() throws IOException {
         homePage = new HomePage(driver);
-        closeAppSplashScreen(driver);
+       closeAppSplashScreen(driver);
         String title = homePage.getPageTitle();
         if (title.equals("diu")) {
             Assert.assertTrue(true);

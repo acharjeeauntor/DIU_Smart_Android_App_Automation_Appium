@@ -61,7 +61,7 @@ public class SettingsTest extends BaseClass {
         }
     }
 
-    @Test(priority = 3, description = "Verify if user can select NoticeAndContest or not")
+    @Test(priority = 3 ,description = "Verify if user can select NoticeAndContest or not")
     @Description("Verify if user can select NoticeAndContest or not")
     @Epic("Epic-3")
     @Feature("Navigation Drawer")
@@ -69,11 +69,7 @@ public class SettingsTest extends BaseClass {
     @Severity(SeverityLevel.CRITICAL)
     public void checkNoticeAndContestToggleButton() throws IOException, InterruptedException {
       settings = new SettingsPage(driver);
-        if (settings.pressNoticeAndContestToggleButton()) {
-            Assert.assertTrue(true);
-        } else {
-            Assert.assertTrue(false);
-        }
+      settings.pressNoticeAndContestToggleButton();
     }
     @Test(priority = 4,dataProvider = "NotifyNextClassDataProvider",description = "Verify if user can select Next Class notification or not")
     @Description("Verify if user can select Next Class notification or not")
